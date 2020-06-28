@@ -1,14 +1,16 @@
 var canvas, backgroundImage;
 
 var gameState = 0;
-var playerCount;
-var allPlayers;
 var distance = 0;
-var database;
 
-var form, player, game;
+var car1, car2;
 
-var cars, car1, car2, car3, car4;
+var car= new Group();
+
+var rand; 
+
+var life= 5;
+var score= 0;
 
 var track, car1_img, car2_img, car3_img, car4_img;
 
@@ -16,29 +18,34 @@ function preload(){
   track = loadImage("../images/track.jpg");
   car1_img = loadImage("../images/car1.png");
   car2_img = loadImage("../images/car2.png");
-  car3_img = loadImage("../images/car3.png");
-  car4_img = loadImage("../images/car4.png");
   ground = loadImage("../images/ground.png");
 }
 
 function setup(){
   canvas = createCanvas(displayWidth - 20, displayHeight-30);
-  database = firebase.database();
-  game = new Game();
-  game.getState();
-  game.start();
 }
 
-
 function draw(){
-  if(playerCount === 4){
-    game.update(1);
+ text("Life:" +life,windowWidth*9/ 10, windowHeight/10);
+ text("Score:"+score,windowWidth/10, windowHeight/10 );
+
+ score= Math.round(frameCount/60);
+
+  if (keyDown(UP_ARROW)){
+    distance+=50;
   }
-  if(gameState === 1){
-    clear();
-    game.play();
+
+  if(car.isTouching(car1)){
+    life--;
   }
-  if(gameState === 2){
-    game.end();
+}
+
+function spawnCars(){
+  rand= Math.round(random(0,800))
+  if (frameCount/120){
+    car2= createSprite(rand, windowHeight+100);
+    car2.addImage(car2_img);
+    car2.velocityY= 50;
+    car.add(car2);
   }
 }
