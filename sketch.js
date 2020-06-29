@@ -5,7 +5,7 @@ var distance = 0;
 
 var car1, car2;
 
-var car= new Group();
+var car= []; 
 
 var rand; 
 
@@ -46,6 +46,6 @@ function spawnCars(){
     car2= createSprite(rand, windowHeight+100);
     car2.addImage(car2_img);
     car2.velocityY= 50;
-    car.add(car2);
+    car.push(car2);
   }
 }
